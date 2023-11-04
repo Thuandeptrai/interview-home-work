@@ -38,21 +38,22 @@ const PostCard = ({ post }) => {
   }
   console.log(post)
   return (
-    <Card title={`${title}`}  extra={ currentUserId === post?.onwer?._id ? (
-      <>
-        <Dropdown overlay={
-          <Menu>
-            <Menu.Item key="1">
-              <a href="#">Delete</a>
-            </Menu.Item>
-          </Menu>
-        } trigger={['click']}>
-          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            <DownOutlined />
-          </a>
-        </Dropdown>
-      </>
-    ) :null}  style={{ width: 300, marginBottom: 30 }}>
+    <Card title={`${title}`}  
+    // extra={ currentUserId === post?.onwer?._id ? (
+    //     {/* <Dropdown overlay={
+    //       <Menu>
+    //         <Menu.Item key="1">
+    //           <a href="#">Delete</a>
+    //         </Menu.Item>
+    //       </Menu>
+    //     } trigger={['click']}>
+    //       <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+    //         <DownOutlined />
+    //       </a>
+    //     </Dropdown> */}
+    //     null
+    // ) :null}  
+    style={{ width: 300, marginBottom: 30 }}>
       {/* // convert createdAt to date */}
       <div>
         <p>{new Date(
