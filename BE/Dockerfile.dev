@@ -1,0 +1,8 @@
+FROM node:21-alpine3.17
+ENV NODE_ENV=develop
+WORKDIR /app
+# COPY package.json  ./
+RUN yarn install --frozen-lockfile
+COPY . .
+EXPOSE 3000
+CMD ["yarn", "dev"]
