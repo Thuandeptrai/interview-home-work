@@ -4,32 +4,38 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { applyMiddleware, configureStore, createStore } from '@reduxjs/toolkit'
+import { applyMiddleware, combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
+import storage from 'redux-persist/lib/storage'
 
-import  {
-  registerReducer,
+import {
   authReducer,
-  userReducer
-}  from './redux/reducer'
-
+} from './redux/reducer'
+import { persistStore, persistReducer, persistCombineReducers } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import mySaga from './redux/saga'
 
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+const sagaMiddleware = createSagaMiddleware()
 // create the saga middleware
 // combine reducers
 
-
-const sagaMiddleware = createSagaMiddleware()
-// mount it on the Store  
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    auth: authReducer,
-    register: registerReducer
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+const persistedReducers = persistCombineReducers(persistConfig, {
+  auth: authReducer,
 })
+// create a redux store with our reducer above and middleware
+const store = configureStore({
+  reducer: persistedReducers,
+  middleware: [sagaMiddleware]
+})
+
+const persistor = persistStore(store)
+// mount it on the Store  
+
 
 export default store
 
@@ -40,8 +46,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-   <Provider store={store}>
+   <Provider store={store} >
+    <PersistGate loading={null} persistor={persistor}>
     <App />
+    </PersistGate>
   </Provider> 
   </React.StrictMode>
 );

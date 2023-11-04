@@ -13,12 +13,15 @@ api.interceptors.response.use(
 
         if (err.response.status === 401) {
             store.dispatch({ type: AUTH_ACTIONS.LOGOUT })
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
             window.location = '/login';
         }
-
         return Promise.reject(err);
     }
 )
+// get token from local storage
+const token = localStorage.getItem('token');
+// set token to request header
+if (token) {
+    api.defaults.headers.common['Authorization'] = `${token}`;
+}
 export default api;

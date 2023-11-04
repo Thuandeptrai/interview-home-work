@@ -1,4 +1,5 @@
 const postModel = require('../models/post.model');
+const commentModel = require('../models/comment.model');
 const userModel = require('../models/user.model');
 const convertStringToRegexp = require('../utils/convertStringToRegexp');
 
@@ -48,6 +49,7 @@ const getPostPaging = async (req, res) => {
     const skip = (parseInt(pageIndex) - 1) * limit || 0;
     try {
         const count = await postModel.countDocuments();
+        // populate owner and remove password
         const posts = await postModel.find().populate('owner', 'name').limit(limit).skip(skip);
         res.status(200).json({ count, posts });
     }

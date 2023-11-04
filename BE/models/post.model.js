@@ -6,6 +6,10 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    commentCount: {
+        type: Number,
+        default: 0,
+    },
     tags: [String],
 }, {
     timestamps: true,

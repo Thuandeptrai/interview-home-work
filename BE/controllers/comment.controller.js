@@ -11,7 +11,11 @@ const createComment = async (req, res) => {
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
-        const comment = await commentModel.create({ content, owner: id, post: postId });
+        // update
+        post.commentCount = post.commentCount + 1;
+        await post.save();
+        const comment = await commentModel.create({ content, owner: id, post: postId })
+        await comment.populate('owner', 'name')
         return res.status(201).json(comment);
     } catch (error) {
         return res.status(500).json({ message: error.message });
