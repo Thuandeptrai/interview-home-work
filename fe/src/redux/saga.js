@@ -55,7 +55,6 @@ function* setUserData() {
   Allows concurrent fetches of user.
 */
 function* mySaga() {
-  yield takeEvery( setUserData)
   yield takeEvery(AUTH_ACTIONS.LOGIN, login)
   yield takeEvery(REGISTER_ACTIONS.REGISTER, register)
   yield takeEvery('LOGOUT', logout)

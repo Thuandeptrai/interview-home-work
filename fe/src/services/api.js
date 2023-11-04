@@ -13,6 +13,8 @@ api.interceptors.response.use(
 
         if (err.response.status === 401) {
             store.dispatch({ type: AUTH_ACTIONS.LOGOUT })
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
             window.location = '/login';
         }
 
