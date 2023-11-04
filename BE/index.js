@@ -4,6 +4,7 @@ const app = express();
 const userRouter = require('./routes/user.route');
 const commentRouter = require('./routes/comment.route');
 const postRouter = require('./routes/post.route');
+const cors = require('cors');
 require('dotenv').config();
 const port = 3000;
 const mongoDB = 'mongodb://mongo:27017/my_database';
@@ -13,6 +14,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true }).t
 }).catch(err => console.log(err));
 
 const basicPath = '/api/v1';
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
